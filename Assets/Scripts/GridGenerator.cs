@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
@@ -19,9 +17,9 @@ public class GridGenerator : MonoBehaviour
         for (int y = 0; y < baseSize; y++)
         {
             int layerSize = baseSize - y;
-            for (int x = 0; x < layerSize; x++)
+            for (float x = 0.5f; x < layerSize; x++)
             {
-                for (int z = 0; z < layerSize; z++)
+                for (float z = 0.5f; z < layerSize; z++)
                 {
                     Vector3 position = new Vector3(x - layerSize / 2f, y * cubeHeight, z - layerSize / 2f);
                     GameObject cube = Instantiate(cubePrefab, position, Quaternion.identity, transform);
@@ -36,7 +34,7 @@ public class GridGenerator : MonoBehaviour
 
 //  Spawn on XZ plane
 //  x = -2.5 to 1.5 ; z = -2.5 to 1.5
-//  Define the Direction - Up, Downa, Left, Right
+//  Define the Direction - Up, Down, Left, Right
 
 
 //  y offset = 0.5

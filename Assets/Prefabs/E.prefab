@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4166896197340498237}
   - component: {fileID: 6394767569386942671}
   - component: {fileID: 1538937297407358246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: E
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &810883529131094648
 GameObject:
@@ -115,9 +115,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3968994888875255540}
   - component: {fileID: 2952223606021312141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: E
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,3 +151,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPosition: {x: 0, y: 0, z: 0}
+  direction: 0
+  minMaxStep: {x: 0, y: 0}

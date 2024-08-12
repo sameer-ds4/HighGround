@@ -1,15 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 public class EnemyControl : MonoBehaviour
 {
     public Vector3 currentPosition;
+    public enemyDirection direction;
+    [SerializeField]
+    private Vector2 minMaxStep;
+    private int jumpCount;
+
+    private float x, y, z;
+
+    private void OnEnable() 
+    {
+        PlayerInput.DropThunder += MoveStep;
+    }
+
+    private void OnDisable() 
+    {
+        PlayerInput.DropThunder -= MoveStep;
+    }
 
 
     void Start()
     {
-        
+        minMaxStep = new Vector2(-2f, 2f);
+        y = 0.5f;
     }
 
     void Update()
@@ -20,6 +37,51 @@ public class EnemyControl : MonoBehaviour
 
     private void MoveStep()
     {
-        Debug.LogError("Moving one step");
+        switch(direction)
+        {
+            case enemyDirection.Left:
+                x = 0.5f;
+                z = VariableElement(currentPosition.z);
+                break;
+
+            case enemyDirection.Right:
+                x = -0.5f;
+                z = VariableElement(currentPosition.z);
+                break;
+
+            case enemyDirection.Up:
+                z = -0.5f;
+                x = VariableElement(currentPosition.x);
+                break;
+
+            case enemyDirection.Down:
+                z = 0.5f;
+                x = VariableElement(currentPosition.x);
+                break;
+        }
+
+        minMaxStep += new Vector2(0.5f, -0.5f);
+
+        jumpCount++;
+        transform.DOJump(currentPosition + new Vector3(x, y, z), 0.5f, 1, 0.5f).OnComplete
+        (() => 
+        {
+            currentPosition = transform.position;
+        });
+    }
+
+    private float VariableElement(float currPt)
+    {
+        if(currPt == minMaxStep.x)
+            return 0.5f;
+        else if(currPt == minMaxStep.y)
+            return -0.5f;
+        
+        int x = Random.Range(0,2);
+
+        if(x == 0)
+            return 0.5f;
+        else
+            return -0.5f;
     }
 }
