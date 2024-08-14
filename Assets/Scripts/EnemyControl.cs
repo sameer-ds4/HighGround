@@ -9,12 +9,16 @@ public class EnemyControl : MonoBehaviour
     [SerializeField]
     private Vector2 minMaxStep;
     private int jumpCount;
-
     private float x, y, z;
+
+    public delegate void AttackPlayer();
+    public static event AttackPlayer OnHit;
 
     private void OnEnable() 
     {
         PlayerInput.DropThunder += MoveStep;
+
+        SpawnAnimate();
     }
 
     private void OnDisable() 
@@ -31,6 +35,8 @@ public class EnemyControl : MonoBehaviour
 
     void Update()
     {
+        if(!GameManager.gameStart) return;
+
         if(Input.GetKeyDown(KeyCode.Space))
             MoveStep();
     }
@@ -63,11 +69,20 @@ public class EnemyControl : MonoBehaviour
         minMaxStep += new Vector2(0.5f, -0.5f);
 
         jumpCount++;
-        transform.DOJump(currentPosition + new Vector3(x, y, z), 0.5f, 1, 0.5f).OnComplete
-        (() => 
+        if(gameObject.transform != null)
         {
-            currentPosition = transform.position;
-        });
+            transform.DOJump(currentPosition + new Vector3(x, y, z), 0.5f, 1, 0.5f).OnComplete
+            (() => 
+            {
+                currentPosition = transform.position;
+            });
+        }
+    }
+
+    private void SpawnAnimate()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 0.7f);
     }
 
     private float VariableElement(float currPt)
@@ -83,5 +98,25 @@ public class EnemyControl : MonoBehaviour
             return 0.5f;
         else
             return -0.5f;
+    }
+
+    private void OnCollisionEnter(Collision other) 
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            OnHit?.Invoke();
+            KillEnemy();
+        }
+    }
+
+    private void KillEnemy()
+    {
+        // gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy() 
+    {
+        transform.DOKill();
     }
 }

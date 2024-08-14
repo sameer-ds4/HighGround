@@ -3,6 +3,7 @@ using UnityEngine;
 public class GridGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject cubePrefab;
+    [SerializeField] private GameObject collectorPrefab;
     [SerializeField] private int baseSize;
     private float cubeHeight = 0.5f;
 
@@ -27,6 +28,14 @@ public class GridGenerator : MonoBehaviour
                 }
             }
         }
+
+        PlaceCollector();
+    }
+    
+
+    private void PlaceCollector()
+    {
+        Instantiate(collectorPrefab, new Vector3(0, 2.5f, 0), Quaternion.identity);
     }
 }
 

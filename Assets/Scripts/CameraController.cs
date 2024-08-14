@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        if(!GameManager.gameStart) return;
+
         if(Input.GetKeyDown(KeyCode.LeftArrow))
             RotateAround(-90);
         if(Input.GetKeyDown(KeyCode.RightArrow))
