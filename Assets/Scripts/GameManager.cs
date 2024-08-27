@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI Pages")]
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject tutorialSc;
     [SerializeField] private GameObject inGameSc;
     [SerializeField] private GameObject gameEndSc;
 
@@ -26,11 +27,20 @@ public class GameManager : MonoBehaviour
         gameStart = false;
     }
 
-
     public void StartPlay()
     {
         mainMenu.SetActive(false);
-        inGameSc.SetActive(true);
+
+        if(SaveDataHandler.Instance.saveData.tutorial)
+        {
+            tutorialSc.SetActive(true);
+            SaveDataHandler.Instance.saveData.tutorial = false;
+        }
+        else
+        {
+            inGameSc.SetActive(true);
+            tutorialSc.SetActive(false);
+        }
 
         gameStart = true;
     }

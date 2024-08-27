@@ -41,6 +41,12 @@ public class EnemyControl : MonoBehaviour
             MoveStep();
     }
 
+    private void SpawnAnimate()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 0.7f);
+    }
+
     private void MoveStep()
     {
         switch(direction)
@@ -66,6 +72,11 @@ public class EnemyControl : MonoBehaviour
                 break;
         }
 
+        Jump();
+    }
+
+    private void Jump()
+    {
         minMaxStep += new Vector2(0.5f, -0.5f);
 
         jumpCount++;
@@ -77,12 +88,6 @@ public class EnemyControl : MonoBehaviour
                 currentPosition = transform.position;
             });
         }
-    }
-
-    private void SpawnAnimate()
-    {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, 0.7f);
     }
 
     private float VariableElement(float currPt)
@@ -111,7 +116,6 @@ public class EnemyControl : MonoBehaviour
 
     private void KillEnemy()
     {
-        // gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
